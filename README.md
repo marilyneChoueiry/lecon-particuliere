@@ -1,5 +1,5 @@
 # Introduction
-Ce projet....
+Ce projet offre aux eleves la possibilite de reserver facilement des cours avec des enseignants qualifies pres de chez eux.De leur cote ,les enseignants peuvent proposer leurs cours et gerer leur reservations.
 
 # Base de données
 ## User
