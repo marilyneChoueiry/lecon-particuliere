@@ -1,3 +1,70 @@
+<<<<<<< Updated upstream
+=======
+<?php
+
+function isValidPassword($password) {
+    $passLength = strlen($password) >= 8;
+    $uppercase    = preg_match('@[A-Z]@', $password);
+    $lowercase    = preg_match('@[a-z]@', $password);
+    $number       = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
+
+    return $passLength && $uppercase && $lowercase && $number && $specialChars;
+}
+
+
+
+if($_SERVER["REQUEST_METHOD"] == 'POST'){
+    if(
+        !isset($_POST["name"]) 
+        || empty(trim($_POST["name"]))
+        || !isset($_POST['lastName'])
+        || empty(trim($_POST["lastName"]))
+        || !isset($_POST["email"]) 
+        || empty(trim($_POST["email"]))
+        || !isset($_POST["password"]) 
+        || empty(trim($_POST["password"]))
+        || !isset($_POST["region"]) 
+        || !isset($_post['cycle'])
+        || empty(trim($_post['cycle']))
+    )
+    
+        http_response_code(400);
+        header("location:student.php?error=emptyFields");
+    } else {
+        $error = [];
+
+
+        //name Validation
+        $name = htmlspecialchars(trim($_POST["name"]));
+        if(!preg_match("/^[a-zA-Z]{3}[a-zA-Z ]{0,21}$/", $name)){
+            $error["name"] = "Invalid Name";
+        }
+
+        // Email Validation
+        $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $error["email"] = "Invalid Email";
+        }
+
+        // Password Validation
+        $password = trim($_POST["password"]);
+        if(!isValidPassword($password)){
+            $error["password"] = "Invalid Password";
+        }
+         // region Validation
+         $nationality = intval($_POST["region"]);
+         if($region < 1 || $region > 9){
+             $error["region"] = "Invalid region";            
+         }
+
+        
+    
+}
+
+?>
+
+>>>>>>> Stashed changes
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,36 +132,72 @@
         button:hover {
           background-color: #0056b3;
         }
+<<<<<<< Updated upstream
+=======
+        .error-message{
+            margin-top: 20px; 
+            padding: 10px; 
+            border: 1px solid red; 
+            background-color: #ffe6e6; 
+            color: red; 
+            font-weight: bold;
+        }
+>>>>>>> Stashed changes
       </style>
       
 </head>
 <body>
+<<<<<<< Updated upstream
     <form action="formValidation.php" method="POST">
         <h2>sign in for student</h2>
         <div class="student">
             <label >Name</label>
             <input type="text"  class="name">
+=======
+    <form action="student.php" method="POST" enctype="multipart/form-data">
+        <h2>sign up for student</h2>
+        <div class="student">
+            <label >Name</label>
+            <input type="text"  class="name" name="name">
+            <?php if(isset($error["name"])) echo "<div id='error' class='error-message'>" . $error["name"] . "</div>"; ?>
+>>>>>>> Stashed changes
           </div>
           <br><br>
           <div class="student">
             <label >Last name</label>
+<<<<<<< Updated upstream
             <input type="text"  class="lastName">
+=======
+            <input type="text"  class="lastName" name="lastName">
+>>>>>>> Stashed changes
           </div>
           <br><br>
         <div class="student">
             <label >Email</label>
+<<<<<<< Updated upstream
             <input type="email"  class="email">
+=======
+            <input type="email"  class="email" name="email">
+>>>>>>> Stashed changes
           </div>
         <br><br>
           <div class="student">
             <label >Password</label>
+<<<<<<< Updated upstream
             <input type="password" class="password" >
+=======
+            <input type="password" class="password"  name="password">
+>>>>>>> Stashed changes
             <?php if(isset($error["password"])) echo "<div id='error' class='error-message'>" . $error["password"] . "</div>"; ?>
           </div>
           <br><br>
           <div class="student">
             <label >Region</label>
+<<<<<<< Updated upstream
             <select  class="region">
+=======
+            <select  class="region" name ="region">
+>>>>>>> Stashed changes
               <option selected>--Choose the region--</option>
               <option>Beirut</option>
               <option>Mount Lebanon</option>
@@ -110,18 +213,35 @@
             <br><br>
             <div>
                 <label>choose cycle</label>
+<<<<<<< Updated upstream
                 <input class="cycle" type="checkbox" value="Elementary" >Elementary
                 <br>
                 <input class="cycle" type="checkbox" value="Middle School" >Middle School
                <br>
                 <input class="cycle" type="checkbox" value="High School" >High School
+=======
+                <input class="cycle" name="cycle" type="checkbox" value="Elementary" >Elementary
+                <br>
+                <input class="cycle"  name="cycle" type="checkbox" value="Middle School" >Middle School
+               <br>
+                <input class="cycle"  name="cycle" type="checkbox" value="High School" >High School
+>>>>>>> Stashed changes
                 
                 
              </div>
             <br>
             <div class="student">
+<<<<<<< Updated upstream
             <button type="submit" class="submit">Sign in</button>
           </div>
     </form>
 </body>
 </html>
+=======
+            <button type="submit" class="submit" name="submit">Sign in</button>
+          </div>
+          
+    </form>
+</body>
+</html>
+>>>>>>> Stashed changes
