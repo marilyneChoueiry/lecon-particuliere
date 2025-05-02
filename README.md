@@ -4,73 +4,55 @@ Ce projet offre aux eleves la possibilite de reserver facilement des cours avec 
 # Base de données
 ## user 
 ```SQL
-CREATE TABLE Utilisateur (
-    id_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100)not null
+CREATE TABLE User (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100)not null
     email VARCHAR(100) UNIQUE,
-    mot_de_passe VARCHAR(255),
-    role ENUM('enseignant', 'élève'),
+    password VARCHAR(255),
+    bio text,
+    role ENUM('teacher', 'student'),
     
 );
 ```
-## teacher  
-```SQL
-CREATE TABLE teacher (
-    id_enseignant INT AUTO_INCREMENT PRIMARY KEY,
-    id_utilisateur INT UNIQUE,
-    bio TEXT,
-    experience INT,
-    
-    FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur) ON
- );
-```
-## student 
+
+## course 
 ```SQL
 
-CREATE TABLE student (
-    id_eleve INT AUTO_INCREMENT PRIMARY KEY,
-    id_utilisateur INT UNIQUE,
-    FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur) 
-);
-```
-## cours 
-```SQL
-
-CREATE TABLE Cours (
-    id_cours INT AUTO_INCREMENT PRIMARY KEY,
-    id_enseignant INT,
-    titre VARCHAR(255),
+CREATE TABLE Course (
+    id_course INT AUTO_INCREMENT PRIMARY KEY,
+    id_teacher INT,
+    title VARCHAR(255),
     description TEXT,
-    categorie VARCHAR(100),
-    tarif DECIMAL(10,2),
-    FOREIGN KEY (id_enseignant) REFERENCES Enseignant(id_enseignant)
+    category VARCHAR(100),
+    price DECIMAL(10,2),
+    FOREIGN KEY (id_teacher) REFERENCES Teacher (id_teacher)
 );
 ```
 ## reservation 
 ```SQL
 CREATE TABLE Reservation (
     id_reservation INT AUTO_INCREMENT PRIMARY KEY,
-    id_cours INT,
-    id_eleve INT,
-    date_heure DATETIME,
-    statut ENUM('confirmé', 'annulé', 'en attente') DEFAULT 'en attente',
-    FOREIGN KEY (id_cours) REFERENCES Cours(id_cours) ,
-    FOREIGN KEY (id_eleve) REFERENCES Eleve(id_eleve) 
+    id_course INT,
+    id_student INT,
+    date_hour DATETIME,
+    statut ENUM('confirm', 'canceled', 'on hold') DEFAULT 'on hold',
+    FOREIGN KEY (id_course) REFERENCES Course(id_cours) ,
+    FOREIGN KEY (id_student) REFERENCES Student(id_student) 
 );
 ```
 ## avis 
 ```SQL
-CREATE TABLE Avis (
-    id_avis INT AUTO_INCREMENT PRIMARY KEY,
-    id_enseignant INT,
-    id_eleve INT,
-    note INT CHECK (note BETWEEN 1 AND 5),
-    commentaire TEXT,
-    date_avis TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_enseignant) REFERENCES Enseignant(id_enseignant) ,
-    FOREIGN KEY (id_eleve) REFERENCES Eleve(id_eleve) 
+CREATE TABLE opinion (
+    id_opinion INT AUTO_INCREMENT PRIMARY KEY,
+    id_teacher INT,
+    id_student INT,
+    stars INT CHECK (note BETWEEN 1 AND 5),
+    comment TEXT,
+    date_opinion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_teacher) REFERENCES Teacher(id_teacher) ,
+    FOREIGN KEY (id_student) REFERENCES Student(id_student) 
 );
-
+```
 
 
 
