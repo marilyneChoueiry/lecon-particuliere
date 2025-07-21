@@ -4,54 +4,76 @@ Ce projet offre aux eleves la possibilite de reserver facilement des cours avec 
 # Base de données
 ## user 
 ```SQL
-CREATE TABLE User (
+CREATE TABLE users (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100)not null
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(255),
-    bio text,
-    role ENUM('teacher', 'student'),
-    
+    name VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    region VARCHAR(100) NOT NULL,
+    cycle VARCHAR(50),
+    bio TEXT,
+    file_name VARCHAR(255),
+    file_data LONGBLOB,
+    role ENUM('teacher', 'student') NOT NULL
 );
 ```
+
+## courses
+```SQL
+CREATE TABLE courses(
+    id_user INT,
+    id_course INT,
+    PRIMARY KEY (id_user, id_course),
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ,
+    FOREIGN KEY ( id_course) REFERENCES  Course(id_course)
+)
+```
+
+
+
 
 ## course 
 ```SQL
 
 CREATE TABLE Course (
     id_course INT AUTO_INCREMENT PRIMARY KEY,
-    id_teacher INT,
     title VARCHAR(255),
     description TEXT,
     category VARCHAR(100),
-    price DECIMAL(10,2),
-    FOREIGN KEY (id_teacher) REFERENCES Teacher (id_teacher)
-);
+    price DECIMAL(10,2)
+    
+)
+```
+## studentReservation
+```SQL
+CREATE TABLE student_reservation(
+    id_user INT,
+     id_reservation INT,
+    PRIMARY KEY (id_user,  id_reservation),
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ,
+    FOREIGN KEY ( id_reservation) REFERENCES Reservation( id_reservation)
+)
 ```
 ## reservation 
 ```SQL
 CREATE TABLE Reservation (
     id_reservation INT AUTO_INCREMENT PRIMARY KEY,
     id_course INT,
-    id_student INT,
     date_hour DATETIME,
     statut ENUM('confirm', 'canceled', 'on hold') DEFAULT 'on hold',
-    FOREIGN KEY (id_course) REFERENCES Course(id_cours) ,
-    FOREIGN KEY (id_student) REFERENCES Student(id_student) 
-);
+    FOREIGN KEY (id_course) REFERENCES Course(id_cours) 
+   
+)
 ```
-## avis 
+##  
 ```SQL
 CREATE TABLE opinion (
     id_opinion INT AUTO_INCREMENT PRIMARY KEY,
-    id_teacher INT,
-    id_student INT,
-    stars INT CHECK (note BETWEEN 1 AND 5),
+    stars INT CHECK (stars BETWEEN 1 AND 5),
     comment TEXT,
-    date_opinion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_teacher) REFERENCES Teacher(id_teacher) ,
-    FOREIGN KEY (id_student) REFERENCES Student(id_student) 
-);
+    date_opinion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
 ```
 
 

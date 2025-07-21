@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
-<?php
-
+<?php include_once 'function.php';
 function isValidPassword($password) {
     $passLength = strlen($password) >= 8;
     $uppercase    = preg_match('@[A-Z]@', $password);
@@ -27,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         || !isset($_POST["region"]) 
         || !isset($_post['cycle'])
         || empty(trim($_post['cycle']))
-    )
+    ){
     
         http_response_code(400);
         header("location:student.php?error=emptyFields");
@@ -35,8 +32,12 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         $error = [];
 
 
-        //name Validation
+        //name and last name Validation
         $name = htmlspecialchars(trim($_POST["name"]));
+        if(!preg_match("/^[a-zA-Z]{3}[a-zA-Z ]{0,21}$/", $name)){
+            $error["name"] = "Invalid Name";
+        }
+        $lastname = htmlspecialchars(trim($_POST["lastname"]));
         if(!preg_match("/^[a-zA-Z]{3}[a-zA-Z ]{0,21}$/", $name)){
             $error["name"] = "Invalid Name";
         }
@@ -57,14 +58,27 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
          if($region < 1 || $region > 9){
              $error["region"] = "Invalid region";            
          }
+        $cycle=$_POST['cycle'];
+
+         $conn -> getPdoConnention ();
+         $query ="INSERT INTO users (name, lastname,email,pasword,region,cycle) VALUES (:name,:lastname, :email , :pasword,:region,:cycle)";
+         $stmt =$pdo-> prepare ($query);
+         stmt-> blindParam(':name',$name);
+         stmt-> blindParam(':lastname',$lastname);
+         stmt-> blindParam('::email',$email);
+         stmt-> blindParam(':pasword',$password);
+         stmt-> blindParam(':region',$region);
+         stmt-> blindParam('cycle',$cycle);
+        }      
 
         
+      }
     
-}
+
 
 ?>
 
->>>>>>> Stashed changes
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,8 +146,6 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         button:hover {
           background-color: #0056b3;
         }
-<<<<<<< Updated upstream
-=======
         .error-message{
             margin-top: 20px; 
             padding: 10px; 
@@ -142,62 +154,43 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
             color: red; 
             font-weight: bold;
         }
->>>>>>> Stashed changes
       </style>
       
 </head>
 <body>
-<<<<<<< Updated upstream
     <form action="formValidation.php" method="POST">
-        <h2>sign in for student</h2>
-        <div class="student">
-            <label >Name</label>
-            <input type="text"  class="name">
-=======
-    <form action="student.php" method="POST" enctype="multipart/form-data">
+        
+        
         <h2>sign up for student</h2>
         <div class="student">
             <label >Name</label>
             <input type="text"  class="name" name="name">
             <?php if(isset($error["name"])) echo "<div id='error' class='error-message'>" . $error["name"] . "</div>"; ?>
->>>>>>> Stashed changes
           </div>
           <br><br>
           <div class="student">
             <label >Last name</label>
-<<<<<<< Updated upstream
-            <input type="text"  class="lastName">
-=======
+            
             <input type="text"  class="lastName" name="lastName">
->>>>>>> Stashed changes
           </div>
           <br><br>
         <div class="student">
             <label >Email</label>
-<<<<<<< Updated upstream
-            <input type="email"  class="email">
-=======
+            
             <input type="email"  class="email" name="email">
->>>>>>> Stashed changes
           </div>
         <br><br>
           <div class="student">
             <label >Password</label>
-<<<<<<< Updated upstream
-            <input type="password" class="password" >
-=======
+           
             <input type="password" class="password"  name="password">
->>>>>>> Stashed changes
             <?php if(isset($error["password"])) echo "<div id='error' class='error-message'>" . $error["password"] . "</div>"; ?>
           </div>
           <br><br>
           <div class="student">
             <label >Region</label>
-<<<<<<< Updated upstream
-            <select  class="region">
-=======
+           
             <select  class="region" name ="region">
->>>>>>> Stashed changes
               <option selected>--Choose the region--</option>
               <option>Beirut</option>
               <option>Mount Lebanon</option>
@@ -213,35 +206,20 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
             <br><br>
             <div>
                 <label>choose cycle</label>
-<<<<<<< Updated upstream
                 <input class="cycle" type="checkbox" value="Elementary" >Elementary
                 <br>
                 <input class="cycle" type="checkbox" value="Middle School" >Middle School
                <br>
                 <input class="cycle" type="checkbox" value="High School" >High School
-=======
-                <input class="cycle" name="cycle" type="checkbox" value="Elementary" >Elementary
-                <br>
-                <input class="cycle"  name="cycle" type="checkbox" value="Middle School" >Middle School
-               <br>
-                <input class="cycle"  name="cycle" type="checkbox" value="High School" >High School
->>>>>>> Stashed changes
                 
                 
              </div>
             <br>
             <div class="student">
-<<<<<<< Updated upstream
             <button type="submit" class="submit">Sign in</button>
           </div>
     </form>
 </body>
-</html>
-=======
-            <button type="submit" class="submit" name="submit">Sign in</button>
-          </div>
-          
-    </form>
-</body>
-</html>
->>>>>>> Stashed changes
+
+
+
