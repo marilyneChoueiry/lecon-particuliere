@@ -1,17 +1,16 @@
 <?php 
 function getPdoConnention (){
-    $servername="127.0.0.1";
-    $username ="root";
-    $password="";
-    $dbname="lecon-particuliere";
-
+   /* $servername='localhost';
+    $username ='root';
+    $password='';
+    $dbname='lecon-particuliere';
+*/
     try{
-        $con=new PDO("mysql:host = $servername;dbmane=$dbname;$username;$password");
-        $conn -> setAttribute(PDO::Attr_ERRMODE,PDO::HERRMODE_EXCEPTION);
-
+        $conn = new PDO("mysql:host=localhost;dbname=lecon-particuliere;charset=utf8", "root", "");
+        $conn -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+         return $conn;
     }catch(PDOException $e){
-        echo "Connection failed".$e -> getMessage();
-        return null;
+        die("Connection failed: " . $e->getMessage());
     }
 }
 ?>
