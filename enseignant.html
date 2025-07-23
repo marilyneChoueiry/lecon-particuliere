@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Inscription</title>
+  <link rel="stylesheet" href="enseignant.css">
+</head>
+<body>
+  <form id="formEnseignant" action="register_enseignant.php" method="POST" enctype="multipart/form-data">
+    <h2>Teacher Inscription</h2>
+
+    <label>First Name:</label>
+    <input type="text" name="FirstName" required><br>
+
+    <label>Last Name:</label>
+    <input type="text" name="LastName" required><br>
+
+    <label>Region of teaching:</label>
+<select id="region" required>
+  <option value="">-- Chose a region --</option>
+  <option value="Mount Lebanon">Mount Lebanon</option>
+  <option value="Keserwan">Keserwan</option>
+  <option value="North Lebanon">North Lebanon</option>
+  <option value="South Lebanon">South Lebanon</option>
+  <option value="Beirut">Beirut</option>
+  
+</select><br><br>
+
+
+<label for="cv">Download your CV</label>
+<input type='file' name="cv" id="cv" accept='application/pdf' />
+<br><br>
+
+    <label>Description:</label>
+    <textarea name="description" required></textarea>
+
+    <label>Cycle:</label>
+    <select id="cycle" required>
+      <option value="">--Chose a cycle--</option>
+      <option value="cycle">Elementary</option>
+      <option value="cycle">Middle School</option>
+      <option value="cycle">High School</option>
+      
+      
+    </select><br><br>
+    
+
+    <label>subject:</label>
+    <select id="subject" required>
+      <option value="">-- Chose a subject --</option>
+      <option value="Math">Math</option>
+      <option value="Physics">Physics</option>
+      <option value="Chemistry">Chemistry</option>
+      <option value="Biology">Biology</option>
+      
+    </select><br><br>
+    
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <script src="validate.js"></script>
+</body>
+</html>
+<script>
+  function saveTeacherInfo() {
+const region= document.getElementById('region').value;
+const matiere= document.getElementById('matière').value;
+const cycle= document.getElementById('cycle').value;
+
+//save data in localstorage
+localStorage.setItem('teacherRegion',region);
+localStorage.setItem('teacherMatiere',matiere);
+localStorage.setItem('teacherCycle',cycle);
+
+alert('teacherdatasaved');
+  }
+</script>
+
+
