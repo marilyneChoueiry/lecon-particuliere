@@ -82,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"] != 'POST'){
          exit;
 }
 
-        $query = "INSERT INTO users (Firstname, Lastname, email, password, region, cycle, description,cv)
+        $query = "INSERT INTO users (Firstname, Lastname, email, password, region, cycle, description,cv,role)
         VALUES (:name, :lastname, :email, :password, :region, :cycle, :role)";
         $stmt = $conn->prepare($query);
         
@@ -94,7 +94,7 @@ if($_SERVER["REQUEST_METHOD"] != 'POST'){
         $stmt->bindParam(':cycle', $cycle);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':cv', $cv);
-        
+        $stmt->bindParam(':role', $role);
         $stmt->execute();
 
         echo " User inserted successfully!";
