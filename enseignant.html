@@ -10,13 +10,13 @@
     <h2>Teacher Inscription</h2>
 
     <label>First Name:</label>
-    <input type="text" name="FirstName" required><br>
+    <input type="text" name="fist_name" required><br>
 
     <label>Last Name:</label>
-    <input type="text" name="LastName" required><br>
+    <input type="text" name="last_name" required><br>
 
     <label>Region of teaching:</label>
-<select id="region" required>
+<select name="region" required>
   <option value="">-- Chose a region --</option>
   <option value="Mount Lebanon">Mount Lebanon</option>
   <option value="Keserwan">Keserwan</option>
@@ -35,7 +35,7 @@
     <textarea name="description" required></textarea>
 
     <label>Cycle:</label>
-    <select id="cycle" required>
+    <select name="cycle" required>
       <option value="">--Chose a cycle--</option>
       <option value="cycle">Elementary</option>
       <option value="cycle">Middle School</option>
@@ -67,23 +67,7 @@
 
     <button type="submit">Register</button>
   </form>
-
-  <script src="validate.js"></script>
 </body>
 </html>
-<script>
-  function saveTeacherInfo() {
-const region= document.getElementById('region').value;
-const matiere= document.getElementById('matière').value;
-const cycle= document.getElementById('cycle').value;
-
-//save data in localstorage
-localStorage.setItem('teacherRegion',region);
-localStorage.setItem('teacherMatiere',matiere);
-localStorage.setItem('teacherCycle',cycle);
-
-alert('teacherdatasaved');
-  }
-</script>
 
 
