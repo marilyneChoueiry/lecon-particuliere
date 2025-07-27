@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '/../function.php';
 if($_SERVER["REQUEST_METHOD"] != 'POST'){
     die
@@ -16,8 +17,8 @@ if($_SERVER["REQUEST_METHOD"] != 'POST'){
     }
 
     if(
-        isset($_POST['LastName'])
-        && isset($_POST['FirstName']) 
+        isset($_POST['lastName'])
+        && isset($_POST['firstName']) 
         && isset($_POST['email']) 
         && isset($_POST['password']) 
         && isset($_POST['description']) 
@@ -30,16 +31,16 @@ if($_SERVER["REQUEST_METHOD"] != 'POST'){
             extract($_POST);
 
 
-            $name = trim($FirstName);
-            if (strlen($FirstName) < 2) {
+            $name = trim($firstName);
+            if (strlen($firstName) < 2) {
                 
                 
             }
 
 
 
-            $name = trim($LastName);
-            if (strlen($LastName) < 2) {
+            $name = trim($lastName);
+            if (strlen($lastName) < 2) {
                die
             }
         
@@ -67,6 +68,10 @@ if($_SERVER["REQUEST_METHOD"] != 'POST'){
     if($_FILES["cv"]["error"] !== 0) die
      if($_FILES["cv"]["type"] != 'application/pdf') die
      if($_FILES["cv"]["size"] > (5 * 1024 * 1024)) die
+
+     
+
+
   try {
         
         $conn=getPdoConnention(); 
@@ -80,14 +85,14 @@ if($_SERVER["REQUEST_METHOD"] != 'POST'){
     if ($emailExists) {
         echo "⚠️ This email is already registered.";
          exit;
-}
+}last_name
 
-        $query = "INSERT INTO users (Firstname, Lastname, email, password, region, cycle, description,cv,role)
+        $query = "INSERT INTO users (fist_name, last_name, email, password, region, cycle, description,cv,role)
         VALUES (:name, :lastname, :email, :password, :region, :cycle, :role)";
         $stmt = $conn->prepare($query);
         
-        $stmt->bindParam(':Firstname', $Firstname);
-        $stmt->bindParam(':Lastname', $Lastname);
+        $stmt->bindParam(':fist_name', $fist_name);
+        $stmt->bindParam(':last_name', $last_name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password); 
         $stmt->bindParam(':region', $region);
@@ -102,4 +107,29 @@ if($_SERVER["REQUEST_METHOD"] != 'POST'){
         echo " PDO Error: " . $e->getMessage();
     }
     
+
+
+$firstName=$_POST['fist_name'];
+$lastName=$_POST['last_name'];
+$region=$_POST['region'];
+$cycle=$_POST['cycle'];
+$subject=$_POST['subject'];
+
+$teacher=[
+'first_name'=>$firstName,
+'last_name'=>$lastName,
+'email'=>$email,
+'region'=>$region,
+'cycle'=>$cycle,
+'subject'=>$subject,
+];
+if(!isset($_SESSION['panier'])){
+$_SESSION['panier']=[];
+
+$_SESSION['panier'][]=$teacher;
+echo "teacher added to the panier";
+
 }
+
+       
+       
